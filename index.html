@@ -112,6 +112,11 @@
       font-weight: 500;
       white-space: normal;
     }
+    .carriers {
+      display: block;      /* forces it to its own line */
+      margin-top: 4px;     /* optional spacing tweak */
+      white-space: normal; /* guarantees line wrapping */
+    }
     .price strong {
       font-size: 19px;
       color: var(--text-main);
@@ -220,10 +225,10 @@
   <div class="grid">
     <section>
       <p class="price">
-        From <strong>£2.99 per pickup</strong><br />
-        Up to 3 parcels per stop (prepaid label or QR code required).<br />
-        Vinted, ASOS, Zara, Amazon and all major carriers supported.
-      </p>
+  From <strong>£2.99 per pickup</strong><br />
+  Up to 3 parcels per stop (prepaid label or QR code required).<br />
+  <span class="carriers">Vinted, ASOS, Zara, Amazon and all major carriers supported.</span>
+</p>
 
       <!-- ✅ BUTTONS -->
       <div class="cta-row">
