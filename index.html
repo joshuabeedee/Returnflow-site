@@ -1,292 +1,1097 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>ReturnFlow Logistics – Doorstep Parcel Pickups</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg-main: #050816;
-      --bg-card: #0b1022;
-      --border-subtle: #232841;
-      --text-main: #f9fafb;
-      --text-muted: #a7b0d8;
-      --accent: #38bdf8;   /* lighter sky blue */    }
-    * {
-      box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="color-scheme" content="only light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReturnFlow — Doorstep Return Pickups in SE London</title>
+<meta name="description" content="We pick up your Evri, Royal Mail and InPost returns from your door. No queues, no hassle. From £2.99. Serving SE London.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFFFF;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5a5a5a;
+    --text-muted: #8a8a8a;
+    --accent: #0066FF;
+    --accent-hover: #0052cc;
+    --accent-light: #E8F0FE;
+    --green: #00A86B;
+    --green-light: #E6F7EF;
+    --orange: #FF6B00;
+    --orange-light: #FFF3E8;
+    --border: #E8E4DE;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; color-scheme: only light; }
+
+  @media (prefers-color-scheme: dark) {
+    html, body {
+      background: #FAF7F2 !important;
+      color: #1a1a1a !important;
+      color-scheme: only light !important;
     }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0, var(--bg-main) 55%);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-    header {
-      padding: 18px 28px;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-img {
-      height: 72px;
-      width: auto;
-    }
-    .logo-text {
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 20px;
-    }
-    .badge {
-      font-size: 12px;
-      padding: 5px 11px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      backdrop-filter: blur(6px);
-    }
-    .hero {
-      max-width: 980px;
-      margin: 40px auto 72px;
-      padding: 0 24px;
-    }
-    h1 {
-      font-size: clamp(32px, 4vw, 42px);
-      margin: 10px 0 14px;
-    }
-    h2 {
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-top: 0;
-      margin-bottom: 32px;
-    }
-    .pill {
-      display: inline-block;
-      font-size: 13px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-      gap: 36px;
-      align-items: flex-start;
-    }
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .hero {
-        margin-top: 28px;
-        padding-inline: 18px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    ul {
-      padding-left: 18px;
-      margin-top: 0;
-      margin-bottom: 20px;
-      color: #cbd5f5;
-    }
-    .price {
-      margin-top: 0;
-      margin-bottom: 26px;
-      font-weight: 500;
-      white-space: normal;
-    }
-    .carriers {
-      display: block;      /* forces it to its own line */
-      margin-top: 4px;     /* optional spacing tweak */
-      white-space: normal; /* guarantees line wrapping */
-    }
-    .price strong {
-      font-size: 19px;
-      color: var(--text-main);
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    a.button {
-      display: inline-block;
-      padding: 11px 20px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: transform 0.08s ease, box-shadow 0.08s ease,
-        background 0.1s ease, border-color 0.1s ease;
-    }
-    a.button-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
-    }
-    a.button-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 40px rgba(37, 99, 235, 0.5);
-    }
-    a.button-secondary {
-      background: transparent;
-      color: var(--text-main);
-      border-color: var(--accent);
-    }
-    a.button-secondary:hover {
-      background: rgba(37, 99, 235, 0.08);
-    }
-    .note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 22px;
-    }
-    .card {
-      background: var(--bg-card);
-      border-radius: 18px;
-      padding: 20px 18px 18px;
-      border: 1px solid var(--border-subtle);
-      font-size: 14px;
-      color: #d0d6f7;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
-    }
-    .card h3 {
-      margin-top: 0;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    .card ol {
-      padding-left: 18px;
-      margin: 0 0 12px;
-    }
-    .contact-line {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 10px;
-    }
-    .contact-line a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .contact-line a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 16px 24px 26px;
-      font-size: 12px;
-      color: #8b92b6;
-      text-align: center;
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent-light); color: var(--accent); }
+
+  /* === NAV === */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 14px 24px;
+    background: rgba(250, 247, 242, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .nav-logo-icon {
+    height: 36px;
+    width: auto;
+    border-radius: 8px;
+  }
+
+  .nav-logo-text {
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-cta {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* === HERO === */
+  .hero {
+    padding: 120px 24px 60px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-light);
+    color: var(--green);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .hero-badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 56px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease 0.1s both;
+  }
+
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), #4D94FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2.5vw, 20px);
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 540px;
+    margin: 0 auto 32px;
+    animation: fadeInUp 0.6s ease 0.2s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.6s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(0, 102, 255, 0.25);
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0, 102, 255, 0.3); }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 16px 28px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); }
+
+  .hero-postcodes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease 0.4s both;
+  }
+
+  .postcode-tag {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .postcode-more {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === PRICE CARDS === */
+  .section {
+    padding: 60px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-size: clamp(28px, 5vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 560px;
+  }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .price-grid { grid-template-columns: 1fr; }
+  }
+
+  .price-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .price-card-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .price-card-badge.popular {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .price-card-badge.best-value {
+    background: var(--orange-light);
+    color: var(--orange);
+  }
+
+  .price-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .price-card-icon.consumer { background: var(--accent-light); }
+  .price-card-icon.pro { background: var(--orange-light); }
+
+  .price-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .price-card-for {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .price-card-price {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+
+  .price-card-price .unit {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .price-card-detail {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .price-card-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .price-card-features li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.45;
+  }
+
+  .price-card-features li::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* === HOW IT WORKS === */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  @media (max-width: 600px) {
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .step {
+    background: var(--warm-white);
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .step h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* === CARRIERS === */
+  .carriers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding: 40px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .carrier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .carrier-logo {
+    width: 64px;
+    height: 64px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: -0.02em;
+    transition: all 0.2s;
+  }
+
+  .carrier-logo:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+  .carrier-name {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* === TESTIMONIAL === */
+  .testimonial-section {
+    padding: 60px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .testimonial-quote {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.55;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .testimonial-quote::before {
+    content: "\201C";
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--accent);
+    opacity: 0.15;
+    position: absolute;
+    top: 12px;
+    left: 24px;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .testimonial-name {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* === PRO SELLER SECTION === */
+  .pro-section {
+    padding: 60px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .pro-card {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    border-radius: 20px;
+    padding: 48px 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pro-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pro-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,107,0,0.15);
+    color: #FF9B4D;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .pro-card h2 {
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    color: white;
+  }
+
+  .pro-card-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+
+  .pro-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 500px) {
+    .pro-stats { grid-template-columns: 1fr; gap: 12px; }
+    .pro-card { padding: 36px 24px; }
+  }
+
+  .pro-stat {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+
+  .pro-stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+    color: #FF9B4D;
+  }
+
+  .pro-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  .pro-features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 500px) {
+    .pro-features { grid-template-columns: 1fr; }
+  }
+
+  .pro-features li {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.45;
+  }
+
+  .pro-features li::before {
+    content: "✓";
+    color: #FF9B4D;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .btn-pro {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-pro:hover { background: #e55f00; transform: translateY(-2px); }
+
+  /* === FAQ === */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .faq-item {
+    background: var(--warm-white);
+  }
+
+  .faq-q {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .faq-q:hover { background: rgba(0,0,0,0.015); }
+
+  .faq-q-icon {
+    font-size: 20px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .faq-item.open .faq-q-icon { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding: 0 24px 20px;
+  }
+
+  .faq-a p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* === FOOTER CTA === */
+  .footer-cta {
+    padding: 80px 24px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-cta h2 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .footer-cta p {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .footer a:hover { text-decoration: underline; }
+
+  /* === TRUST BAR === */
+  .trust-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .trust-item-icon {
+    font-size: 16px;
+  }
+</style>
 </head>
 <body>
-<header>
-  <div class="header-left">
-    <!-- 🔵 YOUR LOGO (update src if filename differs) -->
-    <img src="returnflow-logo.png" alt="ReturnFlow logo" class="logo-img" />
-    <div class="logo-text">ReturnFlow Logistics</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <img src="returnflow-logo.png" alt="ReturnFlow" class="nav-logo-icon">
+    <span class="nav-logo-text">ReturnFlow</span>
+  </a>
+  <a href="https://forms.gle/ULEWJjNTPf4d34yn8" target="_blank" class="nav-cta">Book a Pickup</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Collecting today in SE London
   </div>
-  <div class="badge">Serving SE20 & nearby</div>
-</header>
 
-<main class="hero">
-  <div class="pill">Doorstep parcel pickups for online returns</div>
-  <h1>Doorstep return pickups. Dropped off correctly, with updates.</h1>
-  <h2>No queues, no lockers, no missed opening times - just a quick pickup that fits around you.</h2>
+  <h1>Never queue at the <span class="highlight">post office</span> again.</h1>
 
-  <div class="grid">
-    <section>
-      <p class="price">
-  From <strong>£2.99 per pickup</strong><br />
-  Up to 3 parcels per stop (prepaid label or QR code required).<br />
-  <span class="carriers">Vinted, ASOS, Zara, Amazon and all major carriers supported.</span>
-</p>
+  <p class="hero-sub">
+    We pick up your Evri, Royal Mail and InPost returns from your door. All carriers, one trip. From&nbsp;£2.99.
+  </p>
 
-      <!-- ✅ BUTTONS -->
-      <div class="cta-row">
-        <!-- BOOK NOW BUTTON -->
-        <a class="button button-primary"
-           href="https://forms.gle/ULEWJjNTPf4d34yn8"
-           target="_blank" rel="noopener">
-          Book now
-        </a>
+  <div class="hero-ctas" id="book">
+    <a href="https://forms.gle/ULEWJjNTPf4d34yn8" target="_blank" class="btn-primary">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book a Pickup
+    </a>
+    <a href="https://wa.me/message/WEAFUQAP5UDYL1" class="btn-whatsapp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.555 4.126 1.524 5.865L.054 23.577a.5.5 0 00.613.613l5.712-1.47A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.94 0-3.767-.546-5.32-1.493l-.38-.228-3.393.873.9-3.285-.25-.396A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
 
-        <!-- WHATSAPP BUTTON -->
-        <a class="button button-secondary"
-           href="https://wa.me/message/WEAFUQAP5UDYL1"
-           target="_blank" rel="noopener">
-          WhatsApp us
-        </a>
-      </div>
+  <div class="hero-postcodes">
+    <span class="postcode-tag">SE19</span>
+    <span class="postcode-tag">SE20</span>
+    <span class="postcode-tag">SE25</span>
+    <span class="postcode-tag">SE26</span>
+    <span class="postcode-tag">BR2</span>
+    <span class="postcode-tag">BR3</span>
+    <span class="postcode-more">+ expanding soon</span>
+  </div>
+</section>
 
-      <p class="note">
-        We currently cover SE19, SE20, SE25, SE26, BR2 and BR3. More areas coming soon.
-      </p>
-      <ul>
-        <li>We collect parcels with a prepaid return label or QR code.</li>
-        <li>We hand them in at the correct Evri, Royal Mail, InPost or other drop-off point.</li>
-        <li>You receive confirmation once your parcel has been dropped off.</li>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-item"><span class="trust-item-icon">🔒</span> Insured collections</span>
+  <span class="trust-item"><span class="trust-item-icon">📲</span> Drop-off confirmation sent</span>
+  <span class="trust-item"><span class="trust-item-icon">⚡</span> Same-day pickup available</span>
+</div>
+
+<!-- CARRIERS -->
+<div class="carriers">
+  <div class="carrier">
+    <div class="carrier-logo">Evri</div>
+    <span class="carrier-name">Evri</span>
+  </div>
+  <div class="carrier">
+    <div class="carrier-logo" style="font-size:10px; text-align:center; line-height:1.2;">Royal<br>Mail</div>
+    <span class="carrier-name">Royal Mail</span>
+  </div>
+  <div class="carrier">
+    <div class="carrier-logo">InPost</div>
+    <span class="carrier-name">InPost</span>
+  </div>
+  <div class="carrier">
+    <div class="carrier-logo">DPD</div>
+    <span class="carrier-name">DPD</span>
+  </div>
+  <div class="carrier">
+    <div class="carrier-logo" style="font-size:10px;">Amazon</div>
+    <span class="carrier-name">Amazon</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-label">How it works</div>
+  <h2>Book in 30 seconds.<br>We handle the rest.</h2>
+  <p class="section-desc">No apps to download. No accounts to create. Just book, leave your parcels by the door, and we'll take care of everything.</p>
+
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Book a slot</h4>
+      <p>Pick a day that works. Morning or afternoon.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Leave your parcels</h4>
+      <p>By the door with your prepaid labels or QR codes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>We drop them off</h4>
+      <p>At the correct carrier point — Evri, Royal Mail, InPost.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Get confirmation</h4>
+      <p>Photo proof and a message when it's done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-label">Simple pricing</div>
+  <h2>One price. No surprises.</h2>
+  <p class="section-desc">Whether you're returning a dress from ASOS or shipping 40 Vinted orders, we've got you covered.</p>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <span class="price-card-badge popular">Most popular</span>
+      <div class="price-card-icon consumer">📦</div>
+      <h3>Personal Returns</h3>
+      <p class="price-card-for">For online shoppers</p>
+      <div class="price-card-price">£2.99 <span class="unit">/ pickup</span></div>
+      <p class="price-card-detail">Up to 3 parcels per stop. Any carrier mix.</p>
+      <ul class="price-card-features">
+        <li>Evri, Royal Mail, InPost & more</li>
+        <li>Prepaid label or QR code required</li>
+        <li>Drop-off confirmation with photo</li>
+        <li>Same-day pickup available</li>
       </ul>
+    </div>
 
-      <p class="contact-line">
-        Prefer email? Reach us at
-        <a href="mailto:hello@returnflowlogistics.co.uk">
-          hello@returnflowlogistics.co.uk
-        </a>
-      </p>
-    </section>
-
-    <aside class="card">
-      <h3>How it works</h3>
-      <ol>
-        <li>Book a time slot that suits you.</li>
-        <li>Leave your parcel by the door or hand it to our driver.</li>
-        <li>We take it to the correct carrier drop-off point.</li>
-        <li>You get a confirmation message when it's dropped off.</li>
-      </ol>
-      <p style="margin:0;">
-        All collections are handled by ReturnFlow or trusted partner couriers,
-        insured for handling parcels, so your return is always looked after properly.
-      </p>
-    </aside>
+    <div class="price-card">
+      <span class="price-card-badge best-value">Best value</span>
+      <div class="price-card-icon pro">🚀</div>
+      <h3>Pro Sellers</h3>
+      <p class="price-card-for">For Vinted, eBay & Depop sellers</p>
+      <div class="price-card-price">£20 <span class="unit">+ 60p/parcel</span></div>
+      <p class="price-card-detail">Bulk pickups of 20-40+ parcels. Weekly runs available.</p>
+      <ul class="price-card-features">
+        <li>All carriers in one collection</li>
+        <li>Scheduled weekly pickups</li>
+        <li>Save 3-4 hours per week</li>
+        <li>WhatsApp updates throughout</li>
+      </ul>
+    </div>
   </div>
-</main>
+</section>
 
-<footer>
-  © <span id="year"></span> ReturnFlow Logistics Ltd. All rights reserved. ·
-  <a href="mailto:hello@returnflowlogistics.co.uk">hello@returnflowlogistics.co.uk</a>
-</footer>
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="testimonial-card">
+    <p class="testimonial-quote">
+      Honestly, it's been a game changer for my business. He comes straight to my home, grabs all my parcels and takes them wherever they need to go. It saves me so much time and stress. Reliable people are rare these days &mdash; I'm hanging onto him!
+    </p>
+    <div class="testimonial-author">
+      <div class="testimonial-avatar">V</div>
+      <div>
+        <div class="testimonial-name">Verified Seller</div>
+        <div class="testimonial-role">Vinted Pro Seller · SE London</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-</body>
-</html>
+<!-- PRO SELLER SECTION -->
+<section class="pro-section" id="pro">
+  <div class="pro-card">
+    <div class="pro-card-badge">⚡ For high-volume sellers</div>
+    <h2>Selling 20+ items a week?<br>Stop wasting time at drop-offs.</h2>
+    <p class="pro-card-sub">
+      We collect all your parcels in one trip — Evri, Royal Mail, InPost, doesn't matter. You pack, we ship. More time listing, less time queueing.
+    </p>
+
+    <div class="pro-stats">
+      <div class="pro-stat">
+        <div class="pro-stat-value">3-4 hrs</div>
+        <div class="pro-stat-label">Saved per week</div>
+      </div>
+      <div class="pro-stat">
+        <div class="pro-stat-value">£32-44</div>
+        <div class="pro-stat-label">Typical weekly cost</div>
+      </div>
+      <div class="pro-stat">
+        <div class="pro-stat-value">All</div>
+        <div class="pro-stat-label">Carriers supported</div>
+      </div>
+    </div>
+
+    <ul class="pro-features">
+      <li>Scheduled weekly pickups</li>
+      <li>Multi-carrier in one trip</li>
+      <li>WhatsApp booking & updates</li>
+      <li>Drop-off confirmation photos</li>
+      <li>No contracts or commitments</li>
+      <li>Cancel or pause any time</li>
+    </ul>
+
+    <a href="https://wa.me/message/WEAFUQAP5UDYL1" class="btn-pro">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.555 4.126 1.524 5.865L.054 23.577a.5.5 0 00.613.613l5.712-1.47A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.94 0-3.767-.546-5.32-1.493l-.38-.228-3.393.873.9-3.285-.25-.396A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+      WhatsApp to Arrange
+    </a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-label">Common questions</div>
+  <h2>Got questions?</h2>
+  <p class="section-desc">Here's what people usually ask.</p>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What do I need to have ready?
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Just your prepaid return label or QR code from the retailer (ASOS, Vinted, Amazon, etc). Stick it on the parcel and leave it by your door or hand it to us. We do the rest.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        How do I know it's been dropped off?
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>We send you a confirmation message with a photo once your parcel has been handed in at the correct drop-off point. You'll know it's done.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What carriers do you support?
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Evri, Royal Mail, InPost, DPD, Amazon, Yodel, and more. If it has a prepaid label or QR code, we can handle it. Multiple carriers in one pickup — that's the whole point.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Is it safe? Are you insured?
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Yes. All collections are handled by ReturnFlow directly. We're insured for parcel handling and you receive confirmation when each parcel is dropped off.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What if I'm not home?
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>No problem — just leave your parcels in a safe place (porch, by the door, with a neighbour) and let us know where. We'll collect and confirm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2>Ready to skip the queue?</h2>
+  <p>Book a pickup in 30 seconds. We'll handle the post office run so you don't have to.</p>
+  <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+    <a href="https://forms.gle/ULEWJjNTPf4d34yn8" target="_blank" class="btn-primary">Book a Pickup</a>
+    <a href="https://wa.me/message/WEAFUQAP5UDYL1" class="btn-whatsapp">WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>
+    &copy; 2026 ReturnFlow Logistics Ltd. All rights reserved.<br>
+    <a href="/cdn-cgi/l/email-protection#0e666b6262614e7c6b7a7b7c6068626179626169677d7a676d7d206d61207b65"><span class="__cf_email__" data-cfemail="2c44494040436c5e4958595e424a40435b40434b455f58454f5f024f43025

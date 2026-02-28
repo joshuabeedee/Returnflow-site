@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ReturnFlow Logistics – Doorstep Parcel Pickups</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: #050816;
+      --bg-card: #0b1022;
+      --border-subtle: #232841;
+      --text-main: #f9fafb;
+      --text-muted: #a7b0d8;
+      --accent: #38bdf8;   /* lighter sky blue */    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, var(--bg-main) 55%);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    header {
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-img {
+      height: 72px;
+      width: auto;
+    }
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 20px;
+    }
+    .badge {
+      font-size: 12px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      backdrop-filter: blur(6px);
+    }
+    .hero {
+      max-width: 980px;
+      margin: 40px auto 72px;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: clamp(32px, 4vw, 42px);
+      margin: 10px 0 14px;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 0;
+      margin-bottom: 32px;
+    }
+    .pill {
+      display: inline-block;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 36px;
+      align-items: flex-start;
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .hero {
+        margin-top: 28px;
+        padding-inline: 18px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    ul {
+      padding-left: 18px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #cbd5f5;
+    }
+    .price {
+      margin-top: 0;
+      margin-bottom: 26px;
+      font-weight: 500;
+      white-space: normal;
+    }
+    .carriers {
+      display: block;      /* forces it to its own line */
+      margin-top: 4px;     /* optional spacing tweak */
+      white-space: normal; /* guarantees line wrapping */
+    }
+    .price strong {
+      font-size: 19px;
+      color: var(--text-main);
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    a.button {
+      display: inline-block;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease,
+        background 0.1s ease, border-color 0.1s ease;
+    }
+    a.button-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+    }
+    a.button-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 40px rgba(37, 99, 235, 0.5);
+    }
+    a.button-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border-color: var(--accent);
+    }
+    a.button-secondary:hover {
+      background: rgba(37, 99, 235, 0.08);
+    }
+    .note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+    .card {
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 20px 18px 18px;
+      border: 1px solid var(--border-subtle);
+      font-size: 14px;
+      color: #d0d6f7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .card ol {
+      padding-left: 18px;
+      margin: 0 0 12px;
+    }
+    .contact-line {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+    .contact-line a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-line a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 16px 24px 26px;
+      font-size: 12px;
+      color: #8b92b6;
+      text-align: center;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <!-- 🔵 YOUR LOGO (update src if filename differs) -->
+    <img src="returnflow-logo.png" alt="ReturnFlow logo" class="logo-img" />
+    <div class="logo-text">ReturnFlow Logistics</div>
+  </div>
+  <div class="badge">Serving SE20 & nearby</div>
+</header>
+
+<main class="hero">
+  <div class="pill">Doorstep parcel pickups for online returns</div>
+  <h1>Doorstep return pickups. Dropped off correctly, with updates.</h1>
+  <h2>No queues, no lockers, no missed opening times - just a quick pickup that fits around you.</h2>
+
+  <div class="grid">
+    <section>
+      <p class="price">
+  From <strong>£2.99 per pickup</strong><br />
+  Up to 3 parcels per stop (prepaid label or QR code required).<br />
+  <span class="carriers">Vinted, ASOS, Zara, Amazon and all major carriers supported.</span>
+</p>
+
+      <!-- ✅ BUTTONS -->
+      <div class="cta-row">
+        <!-- BOOK NOW BUTTON -->
+        <a class="button button-primary"
+           href="https://forms.gle/ULEWJjNTPf4d34yn8"
+           target="_blank" rel="noopener">
+          Book now
+        </a>
+
+        <!-- WHATSAPP BUTTON -->
+        <a class="button button-secondary"
+           href="https://wa.me/message/WEAFUQAP5UDYL1"
+           target="_blank" rel="noopener">
+          WhatsApp us
+        </a>
+      </div>
+
+      <p class="note">
+        We currently cover SE19, SE20, SE25, SE26, BR2 and BR3. More areas coming soon.
+      </p>
+      <ul>
+        <li>We collect parcels with a prepaid return label or QR code.</li>
+        <li>We hand them in at the correct Evri, Royal Mail, InPost or other drop-off point.</li>
+        <li>You receive confirmation once your parcel has been dropped off.</li>
+      </ul>
+
+      <p class="contact-line">
+        Prefer email? Reach us at
+        <a href="mailto:hello@returnflowlogistics.co.uk">
+          hello@returnflowlogistics.co.uk
+        </a>
+      </p>
+    </section>
+
+    <aside class="card">
+      <h3>How it works</h3>
+      <ol>
+        <li>Book a time slot that suits you.</li>
+        <li>Leave your parcel by the door or hand it to our driver.</li>
+        <li>We take it to the correct carrier drop-off point.</li>
+        <li>You get a confirmation message when it's dropped off.</li>
+      </ol>
+      <p style="margin:0;">
+        All collections are handled by ReturnFlow or trusted partner couriers,
+        insured for handling parcels, so your return is always looked after properly.
+      </p>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  © <span id="year"></span> ReturnFlow Logistics Ltd. All rights reserved. ·
+  <a href="mailto:hello@returnflowlogistics.co.uk">hello@returnflowlogistics.co.uk</a>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
